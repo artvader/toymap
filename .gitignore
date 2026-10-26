@@ -27,3 +27,7 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# Agent / design-tooling output
+.taste-skill/
+.claude/

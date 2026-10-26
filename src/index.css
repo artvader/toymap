@@ -1,1 +1,86 @@
 @import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+
+  /* One ground, one ink, one accent; colour on status and data only. */
+  --color-ground: #f1f1ef;
+  --color-surface: #ffffff;
+  --color-ink: #16130f;
+  --color-muted: #66625c;
+  --color-line: #e3e2de;
+  --color-accent: #e1462b;
+  --color-accent-soft: #fbebe6;
+  --color-open: #0f7a4a;
+  --color-closed: #6b6660;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background: var(--color-ground);
+    color: var(--color-ink);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #root {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+
+  /* Tabular figures wherever numbers line up. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  .rise {
+    animation: rise 260ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  /* Loading affordance for the list skeleton. */
+  .skeleton {
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes skeleton-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.45;
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .skeleton {
+    animation: none;
+  }
+}
