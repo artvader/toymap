@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { photoUrl } from '../lib/api'
 import { formatDistance, formatReviews, PRICE_LEVELS } from '../lib/format'
 
 // A stable pale tint per store: identity, not data.
@@ -12,30 +10,15 @@ function tintFor(name) {
 }
 
 function Thumb({ store }) {
-  const [failed, setFailed] = useState(false)
-  const src = failed ? null : photoUrl(store, 160)
-
   return (
     <span
       className="relative grid size-14 shrink-0 place-items-center overflow-hidden"
       style={{ backgroundColor: tintFor(store.name) }}
       aria-hidden="true"
     >
-      {src ? (
-        <img
-          src={src}
-          alt=""
-          loading="lazy"
-          width="56"
-          height="56"
-          className="size-full object-cover"
-          onError={() => setFailed(true)}
-        />
-      ) : (
-        <span className="text-[20px] font-extrabold text-ink/70">
-          {store.name.replace(/^[^A-Za-z]+/, '').charAt(0).toUpperCase()}
-        </span>
-      )}
+      <span className="text-[20px] font-extrabold text-ink/70">
+        {store.name.replace(/^[^A-Za-z]+/, '').charAt(0).toUpperCase()}
+      </span>
     </span>
   )
 }

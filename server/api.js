@@ -38,13 +38,11 @@ const FIELD_MASK = [
   'places.regularOpeningHours',
   'places.currentOpeningHours',
   'places.utcOffsetMinutes',
-  'places.photos',
   'places.primaryTypeDisplayName',
   'places.businessStatus',
 ].join(',')
 
 function normalise(place) {
-  const photo = Array.isArray(place.photos) && place.photos.length ? place.photos[0] : null
   return {
     id: place.id,
     name: place.displayName?.text ?? 'Toy store',
@@ -60,7 +58,6 @@ function normalise(place) {
     openNow: place.currentOpeningHours?.openNow ?? null,
     weekdayDescriptions: place.regularOpeningHours?.weekdayDescriptions ?? [],
     utcOffsetMinutes: place.utcOffsetMinutes ?? null,
-    photoName: photo?.name ?? null,
     businessStatus: place.businessStatus ?? 'OPERATIONAL',
   }
 }
@@ -109,20 +106,6 @@ export function createApiHandler() {
       if (route === '/config') {
         if (!API_KEY) return sendJson(res, 500, { error: 'GOOGLEMAP_API_KEY is not set on the server' })
         return sendJson(res, 200, { googleMapsKey: API_KEY })
-      }
-
-      if (route === '/photo') {
-        const name = url.searchParams.get('name')
-        if (!name || !/^[A-Za-z0-9_\-/]+$/.test(name)) {
-          res.statusCode = 400
-          return res.end('bad photo name')
-        }
-        const width = Math.min(numberParam(url, 'w', 400), 800)
-        const target = `https://places.googleapis.com/v1/${name}/media?maxWidthPx=${width}&key=${API_KEY}`
-        res.statusCode = 302
-        res.setHeader('Location', target)
-        res.setHeader('Cache-Control', 'public, max-age=604800, immutable')
-        return res.end()
       }
 
       if (route === '/nearby' || route === '/search') {

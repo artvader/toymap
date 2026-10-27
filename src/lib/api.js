@@ -25,12 +25,6 @@ export function searchStores(query, lat, lng) {
   return getJSON(`/api/search?${params}`)
 }
 
-export function photoUrl(store, width = 320) {
-  if (!store.photoName) return null
-  const params = new URLSearchParams({ name: store.photoName, w: String(width) })
-  return `/api/photo?${params}`
-}
-
 export function loadMapsScript(key) {
   if (window.google?.maps) return Promise.resolve()
   if (window.__toyfinderMapsPromise) return window.__toyfinderMapsPromise

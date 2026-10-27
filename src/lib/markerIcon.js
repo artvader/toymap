@@ -10,9 +10,9 @@ const PIN_PATH =
   'M24 56 C34 42 44 33 44 22 A20 20 0 0 0 4 22 C4 33 14 42 24 56 Z'
 
 const TONES = {
-  open: { fill: '#e1462b', stroke: '#ffffff' },
+  open: { fill: '#e5352b', stroke: '#ffffff' },
   closed: { fill: '#6e6a63', stroke: '#ffffff' },
-  selected: { fill: '#16130f', stroke: '#e1462b' },
+  selected: { fill: '#16130f', stroke: '#e5352b' },
 }
 
 export function pinSvg(tone = 'open', glyphColor = '#ffffff') {
@@ -31,7 +31,7 @@ export function pinDataUri(tone = 'open', glyphColor = '#ffffff') {
   return `data:image/svg+xml,${encodeURIComponent(pinSvg(tone, glyphColor))}`
 }
 
-/** Plain brick glyph for the header mark and photo fallbacks. */
+/** Plain brick glyph for the header mark. */
 export function brickSvg(color = '#e1462b') {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="24" viewBox="0 0 28 24">
 <g fill="${color}">
